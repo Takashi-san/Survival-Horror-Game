@@ -842,6 +842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2c24ffcfae71b4081dd803ce60d50b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _transitionData: {fileID: 11400000, guid: 86506f798c0501b418bedb77a2dd4e8c, type: 2}
   _defaultTransition: {fileID: 1337254959080958542, guid: 342c4ac5e00e2b94481dc49eef619874,
     type: 3}
 --- !u!4 &1268479123

@@ -4,13 +4,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour {
+	[SerializeField] TransitionData _transitionData = null;
 	[SerializeField] GameObject _defaultTransition = null;
 	Animator _animator = null;
 
 	void Awake() {
-		if (_defaultTransition) {
-			GameObject transition = Instantiate(_defaultTransition);
-			_animator = transition.GetComponent<Animator>();
+		if (_transitionData) {
+			if (_transitionData.transition) {
+				_animator = Instantiate(_transitionData.transition).GetComponent<Animator>();
+			}
+			else if (_defaultTransition) {
+				_animator = Instantiate(_defaultTransition).GetComponent<Animator>();
+			}
+		}
+		else if (_defaultTransition) {
+			_animator = Instantiate(_defaultTransition).GetComponent<Animator>();
 		}
 	}
 
@@ -23,6 +31,19 @@ public class SceneHandler : MonoBehaviour {
 	}
 
 	IEnumerator DoSceneLoad(string scene) {
+		if (_defaultTransition) {
+			if (_transitionData) {
+				_transitionData.transition = _defaultTransition;
+			}
+			_animator = Instantiate(_defaultTransition).GetComponent<Animator>();
+		}
+		else {
+			if (_transitionData) {
+				_transitionData.transition = null;
+			}
+			_animator = null;
+		}
+
 		if (_animator) {
 			_animator.SetBool("in", true);
 			yield return new WaitForEndOfFrame();
@@ -34,17 +55,36 @@ public class SceneHandler : MonoBehaviour {
 
 	IEnumerator DoSceneLoad(string scene, GameObject transition) {
 		if (transition) {
+			if (_transitionData) {
+				_transitionData.transition = transition;
+			}
 			_animator = Instantiate(transition).GetComponent<Animator>();
-			_animator.SetBool("in", true);
-			yield return new WaitForEndOfFrame();
-			yield return new WaitForSecondsRealtime(_animator.GetCurrentAnimatorStateInfo(0).length);
 		}
-		else if (_animator) {
+		else if (_defaultTransition) {
+			if (_transitionData) {
+				_transitionData.transition = _defaultTransition;
+			}
+			_animator = Instantiate(_defaultTransition).GetComponent<Animator>();
+		}
+		else {
+			if (_transitionData) {
+				_transitionData.transition = null;
+			}
+			_animator = null;
+		}
+
+		if (_animator) {
 			_animator.SetBool("in", true);
 			yield return new WaitForEndOfFrame();
 			yield return new WaitForSecondsRealtime(_animator.GetCurrentAnimatorStateInfo(0).length);
 		}
 		AsyncOperation operation = SceneManager.LoadSceneAsync(scene);
 		yield break;
+	}
+
+	void OnApplicationQuit() {
+		if (_transitionData) {
+			_transitionData.transition = null;
+		}
 	}
 }

@@ -464,6 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2c24ffcfae71b4081dd803ce60d50b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _transitionData: {fileID: 11400000, guid: 86506f798c0501b418bedb77a2dd4e8c, type: 2}
   _defaultTransition: {fileID: 1619733854137824619, guid: 1e3f459954d880e40ac356eb57384f26,
     type: 3}
 --- !u!114 &556847028
@@ -1034,6 +1035,7 @@ GameObject:
   - component: {fileID: 1676550492}
   - component: {fileID: 1676550495}
   - component: {fileID: 1676550494}
+  - component: {fileID: 1676550496}
   - component: {fileID: 1676550493}
   m_Layer: 5
   m_Name: Main_btm
@@ -1105,7 +1107,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 556847027}
+      - m_Target: {fileID: 1676550496}
         m_MethodName: LoadScene
         m_Mode: 5
         m_Arguments:
@@ -1152,3 +1154,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1676550491}
   m_CullTransparentMesh: 0
+--- !u!114 &1676550496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676550491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71bbe81fda4cf1547b82e0e8d4542e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transition: {fileID: 1337254959080958542, guid: 342c4ac5e00e2b94481dc49eef619874,
+    type: 3}
