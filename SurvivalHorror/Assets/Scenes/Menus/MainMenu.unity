@@ -611,8 +611,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -764,7 +764,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1231553934}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1268479124}
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1231553934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -831,6 +842,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2c24ffcfae71b4081dd803ce60d50b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _defaultTransition: {fileID: 1337254959080958542, guid: 342c4ac5e00e2b94481dc49eef619874,
+    type: 3}
 --- !u!4 &1268479123
 Transform:
   m_ObjectHideFlags: 0
@@ -940,8 +953,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
