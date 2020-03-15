@@ -1036,6 +1036,7 @@ GameObject:
   - component: {fileID: 2105160278}
   - component: {fileID: 2105160281}
   - component: {fileID: 2105160280}
+  - component: {fileID: 2105160282}
   - component: {fileID: 2105160279}
   m_Layer: 5
   m_Name: Start_btm
@@ -1107,7 +1108,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1268479122}
+      - m_Target: {fileID: 2105160282}
         m_MethodName: LoadScene
         m_Mode: 5
         m_Arguments:
@@ -1118,6 +1119,17 @@ MonoBehaviour:
           m_StringArgument: GameOver
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1268479122}
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: GameOver
+          m_BoolArgument: 0
+        m_CallState: 0
 --- !u!114 &2105160280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1154,3 +1166,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2105160277}
   m_CullTransparentMesh: 0
+--- !u!114 &2105160282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105160277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71bbe81fda4cf1547b82e0e8d4542e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transition: {fileID: 7136888442229892815, guid: 677a2cb5aa96cca46872511b4c039279,
+    type: 3}

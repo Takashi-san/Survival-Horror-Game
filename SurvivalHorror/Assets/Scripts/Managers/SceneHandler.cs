@@ -18,8 +18,28 @@ public class SceneHandler : MonoBehaviour {
 		StartCoroutine(DoSceneLoad(scene));
 	}
 
+	public void LoadScene(string scene, GameObject transition) {
+		StartCoroutine(DoSceneLoad(scene, transition));
+	}
+
 	IEnumerator DoSceneLoad(string scene) {
 		if (_animator) {
+			_animator.SetBool("in", true);
+			yield return new WaitForEndOfFrame();
+			yield return new WaitForSecondsRealtime(_animator.GetCurrentAnimatorStateInfo(0).length);
+		}
+		AsyncOperation operation = SceneManager.LoadSceneAsync(scene);
+		yield break;
+	}
+
+	IEnumerator DoSceneLoad(string scene, GameObject transition) {
+		if (transition) {
+			_animator = Instantiate(transition).GetComponent<Animator>();
+			_animator.SetBool("in", true);
+			yield return new WaitForEndOfFrame();
+			yield return new WaitForSecondsRealtime(_animator.GetCurrentAnimatorStateInfo(0).length);
+		}
+		else if (_animator) {
 			_animator.SetBool("in", true);
 			yield return new WaitForEndOfFrame();
 			yield return new WaitForSecondsRealtime(_animator.GetCurrentAnimatorStateInfo(0).length);

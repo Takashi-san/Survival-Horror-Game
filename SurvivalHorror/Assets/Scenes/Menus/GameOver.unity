@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2c24ffcfae71b4081dd803ce60d50b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultTransition: {fileID: 1337254959080958542, guid: 342c4ac5e00e2b94481dc49eef619874,
+  _defaultTransition: {fileID: 1619733854137824619, guid: 1e3f459954d880e40ac356eb57384f26,
     type: 3}
 --- !u!114 &556847028
 MonoBehaviour:
