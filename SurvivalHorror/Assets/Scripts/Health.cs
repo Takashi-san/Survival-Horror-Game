@@ -5,8 +5,8 @@ using System;
 
 public class Health : MonoBehaviour {
 	[SerializeField] HealthInfo _healthInfo = null;
-	public int _health = 0;
-	public int _maxHealth = 0;
+	int _health = 0;
+	int _maxHealth = 0;
 
 	public Action<int> healthUpdate;
 
