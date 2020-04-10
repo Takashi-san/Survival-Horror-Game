@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b16172d57582d4f806f79db857125c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: {fileID: 11400000, guid: 767ff964651b57c439143376cf46daf8, type: 2}
+  _weapon: {fileID: 11400000, guid: 7a19e9b85c6d57e42837001dc6f8dcf5, type: 2}
 --- !u!1 &384842115
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,6 +460,7 @@ GameObject:
   - component: {fileID: 396841449}
   - component: {fileID: 396841446}
   - component: {fileID: 396841450}
+  - component: {fileID: 396841451}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -544,6 +545,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac564e45f6e793043b97ee8030f4e81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &396841451
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396841445}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &403789965
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,6 +653,7 @@ GameObject:
   - component: {fileID: 601061086}
   - component: {fileID: 601061085}
   - component: {fileID: 601061084}
+  - component: {fileID: 601061087}
   m_Layer: 0
   m_Name: Dummy
   m_TagString: Player
@@ -694,6 +712,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &601061087
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601061083}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &690943575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,6 +1748,7 @@ GameObject:
   - component: {fileID: 1361921955}
   - component: {fileID: 1361921954}
   - component: {fileID: 1361921953}
+  - component: {fileID: 1361921956}
   m_Layer: 0
   m_Name: Needy
   m_TagString: Player
@@ -1735,7 +1770,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _brain: {fileID: 11400000, guid: 9d97f30433cf5bd48ae79b1a2cc33b85, type: 2}
   _rb2d: {fileID: 1361921954}
-  _speed: 1
+  _speed: 0
 --- !u!50 &1361921954
 Rigidbody2D:
   serializedVersion: 4
@@ -1772,6 +1807,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1361921956
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361921952}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1449820721
 GameObject:
   m_ObjectHideFlags: 0
