@@ -280,6 +280,8 @@ MonoBehaviour:
   _projectile: {fileID: 7488014234644246139, guid: 3534fee82998bcf43bb1205f22b9bc32,
     type: 3}
   _variation: 20
+  _variationReduction: 10
+  _variationIncrease: 5
   _fireRate: 0.15
   _isHold: 1
 --- !u!1 &384842115
