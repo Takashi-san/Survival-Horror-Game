@@ -42,16 +42,4 @@ public class Health : MonoBehaviour {
 			}
 		}
 	}
-
-	/*
-	// Test.
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.Q)) {
-			DealDamage(5);
-		}
-		if (Input.GetKeyDown(KeyCode.E)) {
-			HealDamage(5);
-		}
-	}
-	*/
 }
