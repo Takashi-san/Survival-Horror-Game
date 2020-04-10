@@ -277,13 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b16172d57582d4f806f79db857125c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectile: {fileID: 7488014234644246139, guid: 3534fee82998bcf43bb1205f22b9bc32,
-    type: 3}
-  _variation: 20
-  _variationReduction: 10
-  _variationIncrease: 5
-  _fireRate: 0.15
-  _isHold: 1
+  _weapon: {fileID: 11400000, guid: 767ff964651b57c439143376cf46daf8, type: 2}
 --- !u!1 &384842115
 GameObject:
   m_ObjectHideFlags: 0

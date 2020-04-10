@@ -3,66 +3,67 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Shooter : MonoBehaviour {
-	[SerializeField] GameObject _projectile = null;
-	[SerializeField] float _variation = 0;
-	[SerializeField] float _variationReduction = 0;
-	[SerializeField] float _variationIncrease = 0;
-	[SerializeField] float _fireRate = 1;
-	[SerializeField] bool _isHold = true;
+	[SerializeField] Firearm _weapon = null;
 	float _timer = 0;
 	float _deviation = 0;
 
 	void Start() {
-		// setup
-		_deviation = _variation;
+		_weapon.Setup(gameObject);
+		_deviation = _weapon.DrawDeviation;
 	}
 
 	void Update() {
 		_timer += Time.deltaTime;
 		if (Input.GetMouseButton(1)) {
-			// show sight.
-			Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up * 10), Color.green);
+			// show min/max deviation.
 			Vector3 tmp = Vector3.up * 10;
-			Vector3 tmp1 = Quaternion.Euler(transform.rotation.eulerAngles + (Vector3.forward * _variation)) * tmp;
+			Debug.DrawRay(transform.position, transform.TransformDirection(tmp), Color.green);
+			Vector3 tmp1 = Quaternion.Euler(transform.rotation.eulerAngles + (Vector3.forward * _weapon.MaxDeviation)) * tmp;
 			Debug.DrawRay(transform.position, tmp1, Color.magenta);
-			tmp1 = Quaternion.Euler(transform.rotation.eulerAngles - (Vector3.forward * _variation)) * tmp;
+			tmp1 = Quaternion.Euler(transform.rotation.eulerAngles - (Vector3.forward * _weapon.MaxDeviation)) * tmp;
 			Debug.DrawRay(transform.position, tmp1, Color.magenta);
+			tmp1 = Quaternion.Euler(transform.rotation.eulerAngles + (Vector3.forward * _weapon.MinDeviation)) * tmp;
+			Debug.DrawRay(transform.position, tmp1, Color.cyan);
+			tmp1 = Quaternion.Euler(transform.rotation.eulerAngles - (Vector3.forward * _weapon.MinDeviation)) * tmp;
+			Debug.DrawRay(transform.position, tmp1, Color.cyan);
 
-			// shrink variation.
-			_deviation -= _variationReduction * Time.deltaTime;
-			_deviation = _deviation < 0 ? 0 : _deviation;
+			// shrink deviation.
+			_deviation -= _weapon.DeviationReductionRate * Time.deltaTime;
+			_deviation = _deviation < _weapon.MinDeviation ? _weapon.MinDeviation : _deviation;
+
+			// show sight.
 			tmp1 = Quaternion.Euler(transform.rotation.eulerAngles + (Vector3.forward * _deviation)) * tmp;
 			Debug.DrawRay(transform.position, tmp1, Color.white);
 			tmp1 = Quaternion.Euler(transform.rotation.eulerAngles - (Vector3.forward * _deviation)) * tmp;
 			Debug.DrawRay(transform.position, tmp1, Color.white);
 
-			if (_timer > _fireRate) {
-				if (_isHold) {
+			if (_timer > _weapon.FireRate) {
+				if (_weapon.IsHold) {
 					if (Input.GetMouseButton(0)) {
 						Shoot();
 						_timer = 0;
-						_deviation += _variationIncrease;
-						_deviation = _deviation > _variation ? _variation : _deviation;
+						_deviation += _weapon.FireDeviation;
+						_deviation = _deviation > _weapon.MaxDeviation ? _weapon.MaxDeviation : _deviation;
 					}
 				}
 				else {
 					if (Input.GetMouseButtonDown(0)) {
 						Shoot();
 						_timer = 0;
-						_deviation += _variationIncrease;
-						_deviation = _deviation > _variation ? _variation : _deviation;
+						_deviation += _weapon.FireDeviation;
+						_deviation = _deviation > _weapon.MaxDeviation ? _weapon.MaxDeviation : _deviation;
 					}
 				}
 			}
 		}
 		else {
-			_deviation = _variation;
+			_deviation = _weapon.DrawDeviation;
 		}
 	}
 
 	void Shoot() {
-		float variation = Random.Range(-_deviation, _deviation);
-		Quaternion direction = Quaternion.Euler(transform.rotation.eulerAngles + (Vector3.forward * variation));
-		Instantiate(_projectile, transform.position, direction);
+		float deviation = Random.Range(-_deviation, _deviation);
+		Quaternion direction = Quaternion.Euler(transform.rotation.eulerAngles + (Vector3.forward * deviation));
+		_weapon.Fire(gameObject, direction);
 	}
 }
