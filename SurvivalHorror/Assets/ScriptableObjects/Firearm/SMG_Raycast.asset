@@ -19,6 +19,6 @@ MonoBehaviour:
   _deviationReductionRate: 11
   _fireRate: 0.08
   _isHold: 1
-  _damage: 2
+  _damage: 4
   _nBullets: 1
   _bulletScatter: 0

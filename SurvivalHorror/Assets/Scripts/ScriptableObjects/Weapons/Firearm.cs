@@ -8,9 +8,10 @@ public abstract class Firearm : ScriptableObject {
 	[SerializeField] [Min(0)] protected float _deviationReductionRate = 0;
 	[SerializeField] [Min(0)] protected float _fireRate = 0;
 	[SerializeField] protected bool _isHold = true;
+
 	[SerializeField] [Min(0)] protected int _damage = 0;
 	[SerializeField] [Min(1)] protected int _nBullets = 1;
-	[SerializeField] [Min(0)] protected float _bulletScatter = 0;
+	[SerializeField] [Range(0, 90)] protected float _bulletScatter = 0;
 
 	public float MaxDeviation { get => _maxDeviation; }
 	public float MinDeviation { get => _minDeviation; }

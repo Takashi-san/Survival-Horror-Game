@@ -6,6 +6,6 @@ using UnityEngine;
 public class ProjectileFirearm : Firearm {
 	[SerializeField] GameObject _projectile = null;
 	public override void Fire(GameObject owner, Quaternion direction) {
-		Instantiate(_projectile, owner.transform.position, direction);
+		Instantiate(_projectile, owner.transform.position, direction).GetComponent<Projectile>().SetDamage(_damage);
 	}
 }
