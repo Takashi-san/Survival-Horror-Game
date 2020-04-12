@@ -19,6 +19,7 @@ public class FollowBrain : MovementBrain {
 		}
 
 		Vector2 delta = _target.transform.position - owner.position;
+		owner.LookAt(owner.position + Vector3.forward, (Vector3)delta + _target.transform.position);
 		return delta.normalized;
 	}
 }

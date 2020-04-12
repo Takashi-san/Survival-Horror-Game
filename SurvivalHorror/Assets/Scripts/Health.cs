@@ -5,8 +5,8 @@ using System;
 
 public class Health : MonoBehaviour {
 	[SerializeField] HealthInfo _healthInfo = null;
-	public int _health = 0;
-	public int _maxHealth = 0;
+	int _health = 0;
+	int _maxHealth = 0;
 
 	public Action<int> healthUpdate;
 
@@ -42,16 +42,4 @@ public class Health : MonoBehaviour {
 			}
 		}
 	}
-
-	/*
-	// Test.
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.Q)) {
-			DealDamage(5);
-		}
-		if (Input.GetKeyDown(KeyCode.E)) {
-			HealDamage(5);
-		}
-	}
-	*/
 }

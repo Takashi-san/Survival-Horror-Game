@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b385b03b28bc6b74f851eeac2633e256, type: 3}
+  m_Name: SMG
+  m_EditorClassIdentifier: 
+  _maxDeviation: 40.1
+  _minDeviation: 7.3
+  _drawDeviation: 20
+  _fireDeviation: 3
+  _deviationReductionRate: 11
+  _fireRate: 0.08
+  _isHold: 1
+  _damage: 4
+  _nBullets: 1
+  _bulletScatter: 0
+  _projectile: {fileID: 7488014234644246139, guid: 3534fee82998bcf43bb1205f22b9bc32,
+    type: 3}
