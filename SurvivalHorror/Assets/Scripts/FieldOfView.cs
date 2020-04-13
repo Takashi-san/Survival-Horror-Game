@@ -25,15 +25,13 @@ public class FieldOfView : MonoBehaviour {
 		vertices[0] = Vector3.zero;
 
 		for (int i = 0; i < _rayCount + 1; i++) {
-			Vector3 vertex;
 			RaycastHit2D hit = Physics2D.Raycast(origin, direction * deltaAngle * Vector3.up, _viewDistance, ~_ignore);
 			if (hit.collider == null) {
-				vertex = deltaAngle * Vector3.up * _viewDistance;
+				vertices[i + 1] = deltaAngle * Vector3.up * _viewDistance;
 			}
 			else {
-				vertex = deltaAngle * Vector3.up * Vector2.Distance(origin, hit.point);
+				vertices[i + 1] = deltaAngle * Vector3.up * Vector2.Distance(origin, hit.point);
 			}
-			vertices[i + 1] = vertex;
 
 			if (i > 0) {
 				triangles[(i - 1) * 3] = 0;

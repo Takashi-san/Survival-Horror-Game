@@ -497,7 +497,7 @@ Transform:
   - {fileID: 383953047}
   - {fileID: 711719279}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &396841448
 Rigidbody2D:
@@ -584,7 +584,7 @@ GameObject:
   m_Component:
   - component: {fileID: 403789966}
   - component: {fileID: 403789967}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -623,7 +623,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8e26f1712de30184fa271bf924bcffb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -689,7 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _brain: {fileID: 11400000, guid: 823d8235c6c82294a812967a32fc4b94, type: 2}
-  _speed: 3
+  _speed: 0
 --- !u!50 &601061085
 Rigidbody2D:
   serializedVersion: 4
@@ -724,7 +724,7 @@ Transform:
   m_Children:
   - {fileID: 120720722}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &601061087
 CircleCollider2D:
@@ -862,7 +862,7 @@ GameObject:
   - component: {fileID: 711719282}
   - component: {fileID: 711719281}
   - component: {fileID: 711719280}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FieldOfView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -901,7 +901,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 093c7b64cb94ac9479f8c278ccc68d71, type: 2}
+  - {fileID: 2100000, guid: e832a1c6ab887fa43959d86cae2ae795, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -947,7 +947,7 @@ MonoBehaviour:
   _viewDistance: 8
   _ignore:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1280
 --- !u!1 &746219885
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,7 +1361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 862190477}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2059,7 +2059,7 @@ GameObject:
   - component: {fileID: 1361921953}
   - component: {fileID: 1361921957}
   - component: {fileID: 1361921958}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Needy
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2114,7 +2114,7 @@ Transform:
   m_Children:
   - {fileID: 862190477}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1361921956
 CircleCollider2D:
@@ -2248,7 +2248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1520725736}
   - component: {fileID: 1520725737}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2287,7 +2287,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8e26f1712de30184fa271bf924bcffb1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2309,7 +2309,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4ef93f88f03e10549a5c62776ec8d848, type: 3}
-  m_Color: {r: 1, g: 0.99252295, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.99215686, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
