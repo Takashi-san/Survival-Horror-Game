@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class FieldOfView : MonoBehaviour {
 	[SerializeField] [Range(0, 360)] float _fov = 0;
 	[SerializeField] [Min(1)] int _rayCount = 1;
