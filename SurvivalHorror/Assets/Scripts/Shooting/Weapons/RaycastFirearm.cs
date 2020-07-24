@@ -17,7 +17,6 @@ public class RaycastFirearm : Firearm {
 			target.Add(Physics2D.Raycast(owner.transform.position, direction * Vector3.up));
 		}
 
-
 		for (int i = 0; i < target.Count; i++) {
 			if (target[i].collider != null) {
 				Debug.DrawLine(owner.transform.position, target[i].point, Color.yellow, 1);

@@ -30,20 +30,24 @@ public class Projectile : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
+		if (other.gameObject.GetComponent<Projectile>() != null)
+			return;
+
 		Health targetLife = other.gameObject.GetComponent<Health>();
 		if (targetLife) {
 			targetLife.DealDamage(_damage);
 		}
-
 		OnHit();
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
+		if (other.gameObject.GetComponent<Projectile>() != null)
+			return;
+
 		Health targetLife = other.gameObject.GetComponent<Health>();
 		if (targetLife) {
 			targetLife.DealDamage(_damage);
 		}
-
 		OnHit();
 	}
 }
