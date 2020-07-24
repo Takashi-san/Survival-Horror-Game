@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b3cbcfe084548146a1a93f2e991b7af, type: 3}
-  m_Name: Pistol_Raycast
+  m_Name: Shotgun_Raycast
   m_EditorClassIdentifier: 
-  _maxDeviation: 22.7
-  _minDeviation: 2.1
-  _drawDeviation: 13.2
-  _fireDeviation: 5
-  _deviationReductionRate: 8
-  _fireRate: 0.25
+  _maxDeviation: 0
+  _minDeviation: 0
+  _drawDeviation: 0
+  _fireDeviation: 0
+  _deviationReductionRate: 0
+  _fireRate: 0
   _isHold: 0
-  _reloadTime: 0.5
-  _magazineSize: 12
-  _damage: 10
-  _nBullets: 1
-  _bulletScatter: 0
+  _reloadTime: 1
+  _magazineSize: 6
+  _damage: 1
+  _nBullets: 8
+  _bulletScatter: 10
