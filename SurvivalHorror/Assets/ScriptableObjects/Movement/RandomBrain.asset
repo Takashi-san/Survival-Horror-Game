@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d508033e198bd224ca7b53ae19da7ac1, type: 3}
   m_Name: RandomBrain
   m_EditorClassIdentifier: 
+  _speed: 0
   _stopTime: 0.5
   _moveTime: 0.5

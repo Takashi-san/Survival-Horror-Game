@@ -10,6 +10,7 @@ public class Shooter : MonoBehaviour {
 	Coroutine _reloadCorroutine = null;
 
 	public Action<int> ammoUpdate;
+	public Action<bool> isAiming;
 
 	void Start() {
 		_weapon.Setup(gameObject);
@@ -52,6 +53,10 @@ public class Shooter : MonoBehaviour {
 			Debug.DrawRay(transform.position, tmp1, Color.white);
 			#endregion
 
+			if (isAiming != null)
+				isAiming(true);
+
+			// Fire command.
 			if (!_weapon.IsEmpty) {
 				if (_timer > _weapon.FireRate) {
 					if (_weapon.IsHold) {
@@ -69,6 +74,8 @@ public class Shooter : MonoBehaviour {
 			}
 		}
 		else {
+			if (isAiming != null)
+				isAiming(false);
 			_deviation = _weapon.DrawDeviation;
 		}
 	}
