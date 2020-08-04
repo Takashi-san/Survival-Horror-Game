@@ -21,6 +21,7 @@ MonoBehaviour:
   _isHold: 0
   _reloadTime: 0.5
   _magazineSize: 12
+  _ammoType: 1
   _damage: 10
   _nBullets: 1
   _bulletScatter: 0

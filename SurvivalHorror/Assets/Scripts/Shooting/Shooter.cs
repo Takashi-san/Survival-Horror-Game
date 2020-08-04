@@ -11,16 +11,30 @@ public class Shooter : MonoBehaviour {
 
 	public Action<int> ammoUpdate;
 	public Action<bool> isAiming;
+	public Action reloaded;
+	public Action<Firearm> changedWeapon;
 
 	void Start() {
-		_weapon.Setup(gameObject);
-		_deviation = _weapon.DrawDeviation;
-		if (ammoUpdate != null)
-			ammoUpdate(_weapon.Magazine);
+		if (_weapon != null) {
+			_weapon.Setup(gameObject);
+			_deviation = _weapon.DrawDeviation;
+			if (ammoUpdate != null)
+				ammoUpdate(_weapon.Magazine);
+		}
+		else {
+			if (ammoUpdate != null)
+				ammoUpdate(999);
+		}
+		if (changedWeapon != null)
+			changedWeapon(_weapon);
 	}
 
 	void Update() {
 		_timer += Time.deltaTime;
+
+		// No weapon.
+		if (_weapon == null)
+			return;
 
 		// Reload command.
 		if (Input.GetKeyDown(KeyCode.R)) {
@@ -57,21 +71,29 @@ public class Shooter : MonoBehaviour {
 				isAiming(true);
 
 			// Fire command.
-			if (!_weapon.IsEmpty) {
-				if (_timer > _weapon.FireRate) {
-					if (_weapon.IsHold) {
+			if (_timer > _weapon.FireRate) {
+				if (_weapon.IsHold) {
+					if (!_weapon.IsEmpty) {
 						if (Input.GetMouseButton(0))
 							Shoot();
 					}
 					else {
 						if (Input.GetMouseButtonDown(0))
+							Debug.Log("Out of bullets!");
+					}
+				}
+				else {
+					if (Input.GetMouseButtonDown(0)) {
+						if (!_weapon.IsEmpty) {
 							Shoot();
+						}
+						else {
+							Debug.Log("Out of bullets!");
+						}
 					}
 				}
 			}
-			else {
-				Debug.Log("Out of bullets!");
-			}
+
 		}
 		else {
 			if (isAiming != null)
@@ -97,27 +119,41 @@ public class Shooter : MonoBehaviour {
 
 	void Reload() {
 		if (_reloadCorroutine == null) {
-			_reloadCorroutine = StartCoroutine(Reloading());
+			if (!_weapon.IsFull)
+				_reloadCorroutine = StartCoroutine(Reloading());
 		}
 	}
 
 	IEnumerator Reloading() {
 		yield return new WaitForSeconds(_weapon.ReloadTime);
-		_weapon.Magazine = _weapon.MagazineSize; // Full reload for test.
+		int reload = _weapon.MagazineSize - _weapon.Magazine;
+		int notReloaded = InventorySystem.instance.GetAmmo(_weapon.AmmoType, reload);
+		_weapon.Magazine = _weapon.MagazineSize - notReloaded;
+
 		_reloadCorroutine = null;
 		if (ammoUpdate != null)
 			ammoUpdate(_weapon.Magazine);
+		if (reloaded != null)
+			reloaded();
 	}
 
 	public void ChangeWeapon(Firearm weapon) {
 		if (weapon != null) {
+			if (weapon == _weapon) {
+				return;
+			}
+
 			_weapon = weapon;
+			_weapon.Setup(gameObject);
+			_deviation = _weapon.DrawDeviation;
 			if (_reloadCorroutine != null) {
 				StopCoroutine(_reloadCorroutine);
 				_reloadCorroutine = null;
 			}
 			if (ammoUpdate != null)
 				ammoUpdate(_weapon.Magazine);
+			if (changedWeapon != null)
+				changedWeapon(_weapon);
 		}
 	}
 }

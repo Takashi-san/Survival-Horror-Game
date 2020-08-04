@@ -7,6 +7,8 @@ public class Movement : MonoBehaviour {
 	Rigidbody2D _rb2d = null;
 	Vector2 _move = Vector2.zero;
 
+	public Vector2 Direction => _move;
+
 	void Awake() {
 		_brain.Setup(gameObject);
 		_rb2d = GetComponent<Rigidbody2D>();

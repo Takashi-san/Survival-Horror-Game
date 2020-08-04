@@ -15,6 +15,11 @@ public class TextUpdateAmmo : MonoBehaviour {
 	}
 
 	void UpdateText(int magazine) {
-		_text.text = "Ammo: " + magazine;
+		if (magazine == 999) {
+			_text.text = "Ammo: -";
+		}
+		else {
+			_text.text = "Ammo: " + magazine;
+		}
 	}
 }

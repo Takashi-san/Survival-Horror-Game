@@ -8,6 +8,7 @@ public class Health : MonoBehaviour {
 	int _health = 0;
 	int _maxHealth = 0;
 
+	public bool IsFull { get => _health == _maxHealth; }
 	public Action<int> healthUpdate;
 
 	void Awake() {

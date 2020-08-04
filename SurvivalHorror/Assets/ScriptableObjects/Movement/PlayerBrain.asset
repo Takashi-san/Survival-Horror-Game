@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 485cfdb65696e364ba473d70fb487675, type: 3}
   m_Name: PlayerBrain
   m_EditorClassIdentifier: 
-  _speed: 5
+  _speed: 3
   _walkModifier: 0.5
