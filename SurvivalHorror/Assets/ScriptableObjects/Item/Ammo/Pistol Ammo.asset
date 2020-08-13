@@ -16,4 +16,8 @@ MonoBehaviour:
   _canUse: 0
   _canDiscard: 1
   _maxQuantity: 36
+  _spriteIcon: {fileID: 0}
+  _spriteGame: {fileID: 0}
+  _name: Pistol ammo
+  _description: It helps the pistol go pew pew.
   _ammo: 1

@@ -16,4 +16,8 @@ MonoBehaviour:
   _canUse: 0
   _canDiscard: 1
   _maxQuantity: 140
+  _spriteIcon: {fileID: 0}
+  _spriteGame: {fileID: 0}
+  _name: Submachine ammo
+  _description: It helps the submachinegun go ratatatatata.
   _ammo: 3

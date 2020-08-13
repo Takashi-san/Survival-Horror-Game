@@ -16,4 +16,8 @@ MonoBehaviour:
   _canUse: 0
   _canDiscard: 1
   _maxQuantity: 12
+  _spriteIcon: {fileID: 0}
+  _spriteGame: {fileID: 0}
+  _name: Shotgun ammo
+  _description: It helps the shotgun go BAAM BAAM.
   _ammo: 2

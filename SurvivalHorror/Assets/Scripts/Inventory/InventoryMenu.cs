@@ -113,6 +113,7 @@ public class InventoryMenu : MonoBehaviour {
 	public void UseAction() {
 		InventorySystem.instance.Use(_cells.IndexOf(_selectedCell));
 		DeactivateActions();
+		OnEnable();
 	}
 
 	public void ShortcutAction(int position) {

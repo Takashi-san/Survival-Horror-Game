@@ -16,4 +16,8 @@ MonoBehaviour:
   _canUse: 1
   _canDiscard: 0
   _maxQuantity: 1
+  _spriteIcon: {fileID: 21300000, guid: 739950c2fec642541bf18a70e52f16fd, type: 3}
+  _spriteGame: {fileID: 21300000, guid: 5b574d8ff4fb4a04c8c7821a66045c10, type: 3}
+  _name: Submachinegun
+  _description: It goes ratatatatata!
   _weapon: {fileID: 11400000, guid: 9dd551a04d3e59742851d337ddbbc44f, type: 2}

@@ -14,7 +14,7 @@ public class Health : MonoBehaviour {
 	void Awake() {
 		// Load all health info.
 		_maxHealth = _healthInfo.maxHealth;
-		_health = _maxHealth;
+		_health = _maxHealth/2;
 	}
 
 	void Start() {
