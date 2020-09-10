@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class InventoryMenuController : MonoBehaviour {
 	[SerializeField] GameObject _InventoryCanvas = null;
+	CameraBasePosition _cameraBase = null;
 
 	void Start() {
 		_InventoryCanvas.SetActive(false);
+		_cameraBase = FindObjectOfType<CameraBasePosition>();
 	}
 
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.I)) {
-			_InventoryCanvas.SetActive(!_InventoryCanvas.activeInHierarchy);
+			if (_InventoryCanvas.activeInHierarchy) {
+				_InventoryCanvas.SetActive(false);
+				_cameraBase.unlockFromPlayer();
+			}
+			else {
+				_InventoryCanvas.SetActive(true);
+				_cameraBase.lockToPlayer();
+			}
+
 		}
 	}
 }
