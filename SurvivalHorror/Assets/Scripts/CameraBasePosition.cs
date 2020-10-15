@@ -5,10 +5,12 @@ using System;
 
 public class CameraBasePosition : MonoBehaviour {
 	[SerializeField] Transform _player = null;
+	/*
 	[SerializeField] [Range(0, 1)] float _mouseRatio = 0;
 	[SerializeField] [Min(0)] float _maxDistanceFromPlayer = 0;
-	[SerializeField] [Min(1)] float _playerAproachRatio = 1;
 	[SerializeField] [Min(1)] float _positionAproachRatio = 1;
+	*/
+	[SerializeField] [Min(1)] float _playerAproachRatio = 1;
 
 	bool _lockToPlayer = false;
 

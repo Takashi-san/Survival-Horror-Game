@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SetCursor : MonoBehaviour {
-	[SerializeField] Texture2D cursorTexture;
+	[SerializeField] Texture2D cursorTexture = null;
 	[SerializeField] Vector2 hotSpot = Vector2.zero;
 	CursorMode cursorMode = CursorMode.Auto;
 
