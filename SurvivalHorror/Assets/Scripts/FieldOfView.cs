@@ -4,6 +4,7 @@ using UnityEngine;
 
 [ExecuteInEditMode]
 public class FieldOfView : MonoBehaviour {
+	[SerializeField] bool _debug = false;
 	[SerializeField] [Range(0, 360)] float _fov = 0;
 	[SerializeField] [Min(1)] int _rayCount = 1;
 	[SerializeField] [Min(0)] float _viewDistance = 0;
@@ -29,9 +30,11 @@ public class FieldOfView : MonoBehaviour {
 			RaycastHit2D hit = Physics2D.Raycast(origin, direction * deltaAngle * Vector3.up, _viewDistance, ~_ignore);
 			if (hit.collider == null) {
 				vertices[i + 1] = deltaAngle * Vector3.up * _viewDistance;
+				if (_debug) Debug.DrawLine(origin, origin + transform.rotation * (deltaAngle * Vector3.up * _viewDistance), Color.green);
 			}
 			else {
 				vertices[i + 1] = deltaAngle * Vector3.up * Vector2.Distance(origin, hit.point);
+				if (_debug) Debug.DrawLine(origin, hit.point, Color.red);
 			}
 
 			if (i > 0) {
@@ -47,5 +50,6 @@ public class FieldOfView : MonoBehaviour {
 		_mesh.uv = uv;
 		_mesh.triangles = triangles;
 		_mesh.bounds = new Bounds(origin, Vector3.one * _viewDistance * 2);
+		_mesh.RecalculateBounds();
 	}
 }

@@ -6,6 +6,8 @@ using System;
 
 namespace Pathfind2D {
 	public class Pathfinding : MonoBehaviour {
+		[SerializeField] bool _debugTime = false;
+
 		PathGrid _grid;
 
 		void Awake() {
@@ -17,8 +19,8 @@ namespace Pathfind2D {
 		}
 
 		IEnumerator FindPath(Vector3 p_startPos, Vector3 p_targetPos) {
-			//Stopwatch __sw = new Stopwatch();
-			//__sw.Start();
+			Stopwatch __sw = new Stopwatch();
+			if (_debugTime) __sw.Start();
 
 			Vector3[] __waypoints = new Vector3[0];
 			bool __pathSuccess = false;
@@ -38,8 +40,8 @@ namespace Pathfind2D {
 
 					// Has path been found?
 					if (__currentNode == __targetNode) {
-						//__sw.Stop();
-						//print("Path found in: " + __sw.ElapsedMilliseconds + "ms");
+						if (_debugTime) __sw.Stop();
+						if (_debugTime) print("Path found in: " + __sw.ElapsedMilliseconds + "ms");
 						__pathSuccess = true;
 						break;
 					}

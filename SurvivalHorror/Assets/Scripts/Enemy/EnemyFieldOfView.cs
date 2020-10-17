@@ -70,6 +70,7 @@ public class EnemyFieldOfView : MonoBehaviour {
 			_mesh.uv = uv;
 			_mesh.triangles = triangles;
 			_mesh.bounds = new Bounds(origin, Vector3.one * _viewDistance * 2);
+			_mesh.RecalculateBounds();
 		}
 
 		// Notify collision.
