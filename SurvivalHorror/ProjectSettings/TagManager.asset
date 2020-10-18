@@ -18,8 +18,8 @@ TagManager:
   - BehindMask
   - Obstacle
   - OutsideMask
-  - 
-  - 
+  - Walkable
+  - Test
   - 
   - 
   - 

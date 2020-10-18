@@ -51,7 +51,7 @@ namespace Pathfind2D {
 							continue;
 						}
 
-						int __newMovementCostToNeighbour = __currentNode.gCost + GetDistance(__currentNode, __neighbour);
+						int __newMovementCostToNeighbour = __currentNode.gCost + GetDistance(__currentNode, __neighbour) + __neighbour.movementPenalty;
 						if (__newMovementCostToNeighbour < __neighbour.gCost || !__openSet.Contains(__neighbour)) {
 							__neighbour.gCost = __newMovementCostToNeighbour;
 							__neighbour.hCost = GetDistance(__neighbour, __targetNode);
