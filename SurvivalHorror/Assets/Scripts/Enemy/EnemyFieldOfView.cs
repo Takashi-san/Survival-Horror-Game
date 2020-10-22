@@ -38,10 +38,8 @@ public class EnemyFieldOfView : MonoBehaviour {
 			// Avaliate collision.
 			if (hit.collider != null) {
 				if (hit.transform.tag == "Player") {
-					if (sawPlayer != null) {
-						__sawPlayer = true;
-						__sawPosition = hit.transform.position;
-					}
+					__sawPlayer = true;
+					__sawPosition = hit.transform.position;
 				}
 			}
 
@@ -75,7 +73,9 @@ public class EnemyFieldOfView : MonoBehaviour {
 
 		// Notify collision.
 		if (__sawPlayer) {
-			sawPlayer(__sawPosition);
+			if (sawPlayer != null) {
+				sawPlayer(__sawPosition);
+			}
 		}
 	}
 }

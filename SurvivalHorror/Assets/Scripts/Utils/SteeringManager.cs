@@ -22,7 +22,7 @@ public class SteeringManager {
 		__velocity = Vector2.ClampMagnitude(__velocity, _host.GetMaxVelocity());
 		_host.SetVelocity(__velocity);
 
-		__position += __velocity * Time.deltaTime;
+		__position += __velocity * Time.fixedDeltaTime;
 
 		Reset();
 		return __position;
