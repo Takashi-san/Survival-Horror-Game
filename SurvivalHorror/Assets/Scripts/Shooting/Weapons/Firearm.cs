@@ -29,15 +29,8 @@ public abstract class Firearm : ScriptableObject {
 	public int Magazine {
 		get => _magazine;
 		set {
-			if (value < 0) {
-				_magazine = 0;
-			}
-			else if (value > _magazineSize) {
-				_magazine = _magazineSize;
-			}
-			else {
-				_magazine = value;
-			}
+			_magazine = value;
+			_magazine = Mathf.Clamp(_magazine, 0, _magazineSize);
 		}
 	}
 	public int MagazineSize => _magazineSize;

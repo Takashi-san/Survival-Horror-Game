@@ -4,53 +4,38 @@ using UnityEngine;
 using System;
 
 public class CameraBasePosition : MonoBehaviour {
-	[SerializeField] Transform _player = null;
-	/*
-	[SerializeField] [Range(0, 1)] float _mouseRatio = 0;
-	[SerializeField] [Min(0)] float _maxDistanceFromPlayer = 0;
-	[SerializeField] [Min(1)] float _positionAproachRatio = 1;
-	*/
-	[SerializeField] [Min(1)] float _playerAproachRatio = 1;
+	public bool IsAiming {
+		get => _isAiming;
+		set {
+			_isAiming = value;
+		}
+	}
 
-	bool _lockToPlayer = false;
-
-	public Action lockToPlayer;
-	public Action unlockFromPlayer;
+	[SerializeField] [Min(0)] float _maxOffset = 0;
+	[SerializeField] [Min(0)] float _mouseInfluenceLimitDistance = 0;
+	PlayerControls _controls;
+	bool _isAiming = false;
+	Vector3 _offset = Vector3.zero;
+	float _timer = 0;
 
 	void Awake() {
-		lockToPlayer += LockToPlayer;
-		unlockFromPlayer += UnlockFromPlayer;
+		_controls = new PlayerControls();
+		_controls.Player.MousePosition.Enable();
 	}
 
 	void LateUpdate() {
-		//if (_lockToPlayer) {
-		if (true) {
-			Vector3 diff = (_player.position - transform.position) / _playerAproachRatio;
-			diff.z = 0;
+		Vector3 __target = Player.instance.position;
+		__target.z = 0;
 
-			transform.position = transform.position + diff;
-		}
-		else {
-			/*
-			Vector3 camera = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-			Vector3 diff = camera - _player.position;
-			float magnitude = diff.magnitude * _mouseRatio;
+		_timer += Time.deltaTime;
+		Vector3 __camera = Camera.main.ScreenToWorldPoint(_controls.Player.MousePosition.ReadValue<Vector2>());
+		__camera.z = _mouseInfluenceLimitDistance / 3;
+		Vector3 __direction = __camera - __target;
+		_offset = __direction.normalized;
+		_offset.z = 0;
+		_offset *= _maxOffset;
 
-			if (magnitude > _maxDistanceFromPlayer) {
-				transform.position = new Vector3(_player.position.x + diff.normalized.x * _maxDistanceFromPlayer, _player.position.y + diff.normalized.y * _maxDistanceFromPlayer, -10);
-			}
-			else {
-				transform.position = new Vector3(_player.position.x + diff.normalized.x * magnitude, _player.position.y + diff.normalized.y * magnitude, -10);
-			}
-			*/
-		}
-	}
-
-	void LockToPlayer() {
-		_lockToPlayer = true;
-	}
-
-	void UnlockFromPlayer() {
-		_lockToPlayer = false;
+		__target.z = -10;
+		transform.position = __target + _offset;
 	}
 }

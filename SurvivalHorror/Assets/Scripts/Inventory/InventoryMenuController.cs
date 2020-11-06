@@ -15,11 +15,9 @@ public class InventoryMenuController : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.I)) {
 			if (_InventoryCanvas.activeInHierarchy) {
 				_InventoryCanvas.SetActive(false);
-				_cameraBase.unlockFromPlayer();
 			}
 			else {
 				_InventoryCanvas.SetActive(true);
-				_cameraBase.lockToPlayer();
 			}
 
 		}

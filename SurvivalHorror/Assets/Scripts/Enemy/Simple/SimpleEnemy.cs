@@ -23,7 +23,7 @@ public class SimpleEnemy : MonoSteeringBody {
 		_rb2d = GetComponent<Rigidbody2D>();
 		GetComponentInChildren<EnemyFieldOfView>().sawPlayer += SawPlayer;
 
-		_brain.PushState(PathPlayer);
+		_brain.PushState(Idle);
 	}
 
 	void FixedUpdate() {
@@ -33,7 +33,6 @@ public class SimpleEnemy : MonoSteeringBody {
 	}
 
 	void Movement() {
-		//transform.position = _steeringManager.Update();
 		_rb2d.MovePosition(_steeringManager.Update());
 		transform.LookAt(transform.position + Vector3.forward, GetVelocity().normalized);
 		Debug.DrawLine(transform.position, transform.position + (Vector3)GetVelocity().normalized, Color.yellow);
@@ -42,7 +41,6 @@ public class SimpleEnemy : MonoSteeringBody {
 	#region States
 	void Idle() {
 		_stateText.text = "idle";
-		// See player
 	}
 
 	void SeekPlayer() {

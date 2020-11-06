@@ -4,17 +4,18 @@ using UnityEngine;
 using System;
 
 public class Health : MonoBehaviour {
+	public int CurrentHealth => _health;
+	public bool IsFull { get => _health == _maxHealth; }
+	public Action<int> healthUpdate;
+
 	[SerializeField] HealthInfo _healthInfo = null;
 	int _health = 0;
 	int _maxHealth = 0;
 
-	public bool IsFull { get => _health == _maxHealth; }
-	public Action<int> healthUpdate;
-
 	void Awake() {
 		// Load all health info.
 		_maxHealth = _healthInfo.maxHealth;
-		_health = _maxHealth/2;
+		_health = _maxHealth / 2;
 	}
 
 	void Start() {
