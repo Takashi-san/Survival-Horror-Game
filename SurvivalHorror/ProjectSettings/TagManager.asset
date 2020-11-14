@@ -20,7 +20,7 @@ TagManager:
   - OutsideMask
   - Walkable
   - Test
-  - 
+  - UIgame
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 3182298669
+    locked: 0
+  - name: UI
+    uniqueID: 395358277
     locked: 0

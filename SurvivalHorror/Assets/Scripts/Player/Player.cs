@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	PlayerControls _controls;
 	PlayerShooter _shooter;
 	PlayerMovement _movement;
+	PlayerInteraction _interaction;
 	Vector2 _moveInput;
 	CameraBasePosition _camera;
 
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour {
 
 		_movement = GetComponent<PlayerMovement>();
 		_shooter = GetComponentInChildren<PlayerShooter>();
+		_interaction = GetComponent<PlayerInteraction>();
 		_camera = FindObjectOfType<CameraBasePosition>();
 		GetComponent<Health>().healthUpdate += HealthUpdate;
 	}
@@ -74,7 +76,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void Interacted(InputAction.CallbackContext p_context) {
-
+		_interaction.Interact();
 	}
 
 	void HealthUpdate(int p_health) {
