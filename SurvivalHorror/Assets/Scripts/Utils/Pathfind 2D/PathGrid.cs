@@ -16,6 +16,7 @@ namespace Pathfind2D {
 		[SerializeField] LayerMask _unwalkableMask = 0;
 		[SerializeField] Vector2 _gridWorldSize = Vector2.zero;
 		[SerializeField] float _nodeRadius = 1;
+		// [SerializeField] [Min(0)] float _timeToUpdate = 1;
 
 		Node[,] _grid;
 		float _nodeDiameter;
@@ -24,6 +25,8 @@ namespace Pathfind2D {
 
 		int _penaltyMin = int.MaxValue;
 		int _penaltyMax = int.MinValue;
+
+		// float _timer = 0;
 
 		void Awake() {
 			_nodeDiameter = _nodeRadius * 2;
@@ -38,6 +41,14 @@ namespace Pathfind2D {
 
 			CreateGrid();
 		}
+
+		// void Update() {
+		// 	_timer += Time.deltaTime;
+		// 	if (_timer > _timeToUpdate) {
+		// 		_timer = 0;
+		// 		CreateGrid();
+		// 	}
+		// }
 
 		void CreateGrid() {
 			_grid = new Node[_gridSize.x, _gridSize.y];

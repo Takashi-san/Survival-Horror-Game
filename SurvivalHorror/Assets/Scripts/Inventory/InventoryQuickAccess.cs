@@ -16,8 +16,8 @@ public class InventoryQuickAccess : MonoBehaviour {
 			_indexes.Add(-1);
 		}
 
-		InventorySystem.instance.itemDiscarded += ItemDiscarded;
-		InventorySystem.instance.itemSwaped += ItemSwaped;
+		// InventorySystem.instance.itemDiscarded += ItemDiscarded;
+		// InventorySystem.instance.itemSwaped += ItemSwaped;
 	}
 
 	void Update() {

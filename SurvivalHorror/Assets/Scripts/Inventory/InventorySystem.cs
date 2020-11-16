@@ -6,13 +6,10 @@ using System;
 
 public class InventorySystem : MonoBehaviour {
 	[SerializeField] [Min(0)] int _size = 0;
-	List<Item> _inventory = new List<Item>();
+	List<Item> _inventory;
 
 	public int Size => _size;
 	public List<Item> Inventory => _inventory;
-	public Action addedItem;
-	public Action<int, int> itemSwaped;
-	public Action<int> itemDiscarded;
 	public static InventorySystem instance;
 
 	void Awake() {
@@ -24,6 +21,7 @@ public class InventorySystem : MonoBehaviour {
 			Destroy(this);
 		}
 
+		_inventory = new List<Item>();
 		for (int i = 0; i < _size; i++) {
 			_inventory.Add(null);
 		}
@@ -33,6 +31,9 @@ public class InventorySystem : MonoBehaviour {
 		if ((index >= 0) && (index < _inventory.Count)) {
 			if (_inventory[index] != null) {
 				_inventory[index].Use();
+				if (_inventory[index].Quantity == 0) {
+					DiscardItem(index);
+				}
 			}
 		}
 	}
@@ -41,8 +42,6 @@ public class InventorySystem : MonoBehaviour {
 		Item tmp = _inventory[indexA];
 		_inventory[indexA] = _inventory[indexB];
 		_inventory[indexB] = tmp;
-		if (itemSwaped != null)
-			itemSwaped(indexA, indexB);
 	}
 
 	public int AddItem(ItemType item, int quantity) {
@@ -55,8 +54,6 @@ public class InventorySystem : MonoBehaviour {
 				if (_inventory[i].ItemType == item) {
 					rest = _inventory[i].Add(rest);
 					if (rest == 0) {
-						if (addedItem != null)
-							addedItem();
 						return 0;
 					}
 				}
@@ -75,16 +72,12 @@ public class InventorySystem : MonoBehaviour {
 				}
 				else {
 					_inventory[i] = new Item(item, rest);
-					if (addedItem != null)
-						addedItem();
 					return 0;
 				}
 			}
 		}
 
 		// No more space, return the leftover that didn't fit.
-		if (addedItem != null)
-			addedItem();
 		return rest;
 	}
 
@@ -92,8 +85,6 @@ public class InventorySystem : MonoBehaviour {
 		int index = _inventory.IndexOf(item);
 		if (index != -1) {
 			_inventory[index] = null;
-			if (itemDiscarded != null)
-				itemDiscarded(index);
 		}
 		else {
 			Debug.Log("Did not find item do discard!");
@@ -103,8 +94,6 @@ public class InventorySystem : MonoBehaviour {
 	public void DiscardItem(int index) {
 		if ((index >= 0) && (index < _inventory.Count)) {
 			_inventory[index] = null;
-			if (itemDiscarded != null)
-				itemDiscarded(index);
 		}
 		else {
 			Debug.Log("invalid index to discard");
@@ -131,6 +120,10 @@ public class InventorySystem : MonoBehaviour {
 		// Start consuming the stacks.
 		foreach (KeyValuePair<int, int> kvp in ammo.OrderBy(i => i.Value)) {
 			rest = _inventory[kvp.Key].Consume(rest);
+			if (_inventory[kvp.Key].Quantity == 0) {
+				DiscardItem(kvp.Key);
+			}
+
 			if (rest == 0) {
 				return 0;
 			}
@@ -157,5 +150,17 @@ public class InventorySystem : MonoBehaviour {
 		}
 
 		return ammo;
+	}
+
+	public bool HasItem(ItemType p_item) {
+		foreach (var __item in _inventory) {
+			if (__item == null) {
+				continue;
+			}
+			if (__item.ItemType == p_item) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

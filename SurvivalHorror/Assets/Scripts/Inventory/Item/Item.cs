@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Item {
 	ItemType _itemType;
 	int _quantity;
@@ -56,7 +57,6 @@ public class Item {
 		else {
 			int rest = -_quantity;
 			_quantity = 0;
-			InventorySystem.instance.DiscardItem(this);
 			return rest;
 		}
 	}

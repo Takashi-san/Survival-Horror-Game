@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour {
-	public static Transform instance;
+	public static Player instance;
 
 	PlayerControls _controls;
 	PlayerShooter _shooter;
@@ -12,10 +12,12 @@ public class Player : MonoBehaviour {
 	PlayerInteraction _interaction;
 	Vector2 _moveInput;
 	CameraBasePosition _camera;
+	UIInventoryMenu _inventoryMenu;
+	LookAtMouse _lookAtMouse;
 
 	void Awake() {
 		if (instance == null) {
-			instance = this.transform;
+			instance = this;
 		}
 		else {
 			Debug.Log("More than one player!");
@@ -32,10 +34,16 @@ public class Player : MonoBehaviour {
 		_controls.Player.Reload.started += Reload;
 		_controls.Player.Enable();
 
+		_controls.UI.Inventory.performed += Inventory;
+		_controls.UI.Enable();
+
 		_movement = GetComponent<PlayerMovement>();
 		_shooter = GetComponentInChildren<PlayerShooter>();
 		_interaction = GetComponent<PlayerInteraction>();
 		_camera = FindObjectOfType<CameraBasePosition>();
+		_inventoryMenu = FindObjectOfType<UIInventoryMenu>();
+		_inventoryMenu.Deactivate();
+		_lookAtMouse = GetComponentInChildren<LookAtMouse>();
 		GetComponent<Health>().healthUpdate += HealthUpdate;
 	}
 
@@ -44,9 +52,11 @@ public class Player : MonoBehaviour {
 	}
 
 	void Aiming(InputAction.CallbackContext p_context) {
-		_movement.IsAiming = true;
-		_shooter.IsAiming = true;
-		_camera.IsAiming = true;
+		if (!_inventoryMenu.IsActive) {
+			_movement.IsAiming = true;
+			_shooter.IsAiming = true;
+			_camera.IsAiming = true;
+		}
 	}
 
 	void StopAiming(InputAction.CallbackContext p_context) {
@@ -56,7 +66,9 @@ public class Player : MonoBehaviour {
 	}
 
 	void Shooting(InputAction.CallbackContext p_context) {
-		_shooter.IsShooting = true;
+		if (!_inventoryMenu.IsActive) {
+			_shooter.IsShooting = true;
+		}
 	}
 
 	void StopShooting(InputAction.CallbackContext p_context) {
@@ -72,16 +84,43 @@ public class Player : MonoBehaviour {
 	}
 
 	void Reload(InputAction.CallbackContext p_context) {
-		_shooter.Reload();
+		if (!_inventoryMenu.IsActive) {
+			_shooter.Reload();
+		}
 	}
 
 	void Interacted(InputAction.CallbackContext p_context) {
-		_interaction.Interact();
+		if (!_inventoryMenu.IsActive) {
+			_interaction.Interact();
+		}
+	}
+
+	void Inventory(InputAction.CallbackContext p_context) {
+		if (_inventoryMenu.IsActive) {
+			_inventoryMenu.Deactivate();
+			_camera.inInventory = false;
+			_movement.canWalk = true;
+			_lookAtMouse.isActive = true;
+		}
+		else {
+			_inventoryMenu.Activate();
+			_camera.inInventory = true;
+			_movement.canWalk = false;
+			_movement.UpdateDirection(Vector2.zero);
+			_lookAtMouse.isActive = false;
+			StopAiming(p_context);
+			StopShooting(p_context);
+		}
 	}
 
 	void HealthUpdate(int p_health) {
 		if (p_health == 0) {
 			print("Player died");
 		}
+	}
+
+	public void EquipWeapon(Firearm p_weapon) {
+		Debug.Log("Equiped weapon: " + p_weapon);
+		_shooter.ChangeWeapon(p_weapon);
 	}
 }

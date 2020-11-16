@@ -16,8 +16,8 @@ MonoBehaviour:
   _canUse: 1
   _canDiscard: 0
   _maxQuantity: 1
-  _spriteIcon: {fileID: 21300000, guid: 211cdd81ab2703940a95f4e393076aee, type: 3}
-  _spriteGame: {fileID: 21300000, guid: 793f64fe7ccc35044ba7ea82d1c56cfb, type: 3}
+  _spriteIcon: {fileID: 21300000, guid: 91cd897bec843f745a7af1cfb929364e, type: 3}
+  _spriteGame: {fileID: 21300000, guid: aba40250bb9c1b1429404bbd4d02eb65, type: 3}
   _name: Shotgun
   _description: It goes BAAM BAAM!
-  _weapon: {fileID: 11400000, guid: a2b93cacbd8e23a478337a2f30f32bbf, type: 2}
+  weapon: {fileID: 11400000, guid: a2b93cacbd8e23a478337a2f30f32bbf, type: 2}

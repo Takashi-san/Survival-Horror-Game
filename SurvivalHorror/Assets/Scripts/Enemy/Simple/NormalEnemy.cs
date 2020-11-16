@@ -1,0 +1,235 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using Pathfind2D;
+
+public class NormalEnemy : MonoBehaviour {
+	[Header("Debug")]
+	[SerializeField] bool _debugMode = false;
+	[SerializeField] TextMeshProUGUI _stateText = null;
+
+	[Header("Reference")]
+	[SerializeField] [Min(0)] float _closeEnoughDistance = 0.3f;
+	[SerializeField] LayerMask _raycastMask = new LayerMask();
+	[SerializeField] Transform _lookAtDirection = null;
+	[SerializeField] GameObject _deadPrefab = null;
+
+	[Header("Seek Player")]
+	[SerializeField] [Min(0)] float _loseSightTime = 0;
+	[SerializeField] [Min(0)] float _seekVelocity = 0;
+
+	[Header("Patrol")]
+	[SerializeField] bool _doPatrol = false;
+	[SerializeField] [Min(0)] float _patrolVelocity = 0;
+	[SerializeField] Transform _patrolPositionA = null;
+	[SerializeField] Transform _patrolPositionB = null;
+
+	StackFSM _brain;
+	SteeringManagerRB2D _steeringManager;
+	Rigidbody2D _rb2d;
+
+	Vector3[] _path;
+	int _pathTargetIndex;
+	bool _pathRequested = false;
+	float _pathRefreshTimer = 0;
+	float _pathTimeToRefresh = 0.5f;
+
+	bool _seekingPlayer = true;
+	float _loseSightTimer = 0;
+
+	bool _patrolA = true;
+
+	Vector3 _playerLastSawPosition;
+
+	void Awake() {
+		_brain = new StackFSM();
+		_steeringManager = GetComponent<SteeringManagerRB2D>();
+		_rb2d = GetComponent<Rigidbody2D>();
+		GetComponent<Health>().healthUpdate += HealthUpdate;
+		GetComponentInChildren<EnemyFieldOfView>().sawPlayer += SawPlayer;
+		if (!_debugMode) _stateText.text = "";
+
+		if (_doPatrol) {
+			_brain.PushState(StatePatrol);
+			return;
+		}
+		_brain.PushState(StateIdle);
+	}
+
+	void FixedUpdate() {
+		if (_seekingPlayer) {
+			_loseSightTimer += Time.fixedDeltaTime;
+			if (_loseSightTimer > _loseSightTime) {
+				_seekingPlayer = false;
+
+				_brain.PopState();
+				_path = null;
+				_pathRequested = false;
+				_pathRefreshTimer = 0;
+				if (_doPatrol) {
+					_brain.PushState(StatePatrol);
+				}
+				else {
+					_brain.PushState(StateIdle);
+				}
+			}
+		}
+
+		_brain.UpdateState();
+		_steeringManager.MovementUpdate();
+	}
+
+	#region States
+
+	void StateIdle() {
+		if (_debugMode) _stateText.text = "idle";
+
+		_steeringManager.SeekDirection(Vector2.zero);
+	}
+
+	void StatePatrol() {
+		if (_debugMode) _stateText.text = "patrol";
+		_steeringManager.SetMaxVelocity(_patrolVelocity);
+
+		if (_path == null) {
+			if (!_pathRequested) {
+				if (_patrolA) {
+					PathRequestManager.instance.RequestPath(transform.position, _patrolPositionA.position, OnPathFound);
+				}
+				else {
+					PathRequestManager.instance.RequestPath(transform.position, _patrolPositionB.position, OnPathFound);
+				}
+				_pathRequested = true;
+			}
+		}
+		else {
+			if (_pathTargetIndex < _path.Length) {
+				_steeringManager.SeekPosition(_path[_pathTargetIndex]);
+
+				float __diff = (transform.position - _path[_pathTargetIndex]).magnitude;
+				if (__diff < _closeEnoughDistance) {
+					_pathTargetIndex++;
+				}
+			}
+			else {
+				_path = null;
+				_patrolA = !_patrolA;
+			}
+		}
+
+		_lookAtDirection.LookAt(transform.position + Vector3.forward, _rb2d.velocity.normalized);
+	}
+
+	void StatePathPlayer() {
+		if (_debugMode) _stateText.text = "path player";
+		_pathRefreshTimer += Time.fixedDeltaTime;
+		_steeringManager.SetMaxVelocity(_seekVelocity);
+
+		if (_path == null && !_pathRequested || _pathRefreshTimer > _pathTimeToRefresh) {
+			PathRequestManager.instance.RequestPath(transform.position, Player.instance.transform.position, OnPathFound);
+			_pathRefreshTimer = 0;
+			_pathRequested = true;
+		}
+		else {
+			if (_path != null) {
+				if (_pathTargetIndex < _path.Length) {
+					_steeringManager.SeekPosition(_path[_pathTargetIndex]);
+
+					float __diff = (transform.position - _path[_pathTargetIndex]).magnitude;
+					if (__diff < _closeEnoughDistance) {
+						_pathTargetIndex++;
+					}
+				}
+				else {
+					_path = null;
+				}
+			}
+		}
+
+		_lookAtDirection.LookAt(transform.position + Vector3.forward, _rb2d.velocity.normalized);
+
+		Vector3 __direction = (Player.instance.transform.position - transform.position).normalized;
+		RaycastHit2D __ray = Physics2D.Raycast(transform.position, __direction, float.MaxValue, _raycastMask);
+		Debug.DrawLine(transform.position, __ray.point, Color.red);
+		if (__ray.collider != null) {
+			if (__ray.transform.GetComponent<Player>() != null) {
+				//if (__ray.transform.tag == "Player") {
+				_brain.PopState();
+				_brain.PushState(StateSeekPlayer);
+				_path = null;
+				_pathRequested = false;
+				_pathRefreshTimer = 0;
+			}
+		}
+	}
+
+	void StateSeekPlayer() {
+		if (_debugMode) _stateText.text = "seek player";
+		_steeringManager.SetMaxVelocity(_seekVelocity);
+
+		Vector3 __direction = (Player.instance.transform.position - transform.position).normalized;
+		_steeringManager.SeekDirection(__direction);
+
+		_lookAtDirection.LookAt(transform.position + Vector3.forward, __direction);
+
+		RaycastHit2D __ray = Physics2D.Raycast(transform.position, __direction, float.MaxValue, _raycastMask);
+		Debug.DrawLine(transform.position, __ray.point, Color.red);
+		if (__ray.collider != null) {
+			if (__ray.transform.GetComponent<Player>() != null) {
+				return;
+			}
+		}
+
+		_brain.PopState();
+		_brain.PushState(StatePathPlayer);
+	}
+
+	#endregion
+
+	public void SawPlayer(Vector3 p_position) {
+		_playerLastSawPosition = p_position;
+
+		_seekingPlayer = true;
+		_loseSightTimer = 0;
+		_brain.PopState();
+		_brain.PushState(StateSeekPlayer);
+	}
+
+	public void OnPathFound(Vector3[] p_path, bool p_success) {
+		if (p_success) {
+			_path = p_path;
+			_pathTargetIndex = 0;
+		}
+		else {
+			_path = null;
+		}
+		_pathRequested = false;
+	}
+
+	public void OnDrawGizmos() {
+		if (_path != null && _debugMode) {
+			for (int i = _pathTargetIndex; i < _path.Length; i++) {
+				Gizmos.color = Color.blue;
+				Gizmos.DrawCube(_path[i], Vector3.one * 0.5f);
+
+				if (i == _pathTargetIndex) {
+					Gizmos.DrawLine(transform.position, _path[i]);
+				}
+				else {
+					Gizmos.DrawLine(_path[i - 1], _path[i]);
+				}
+			}
+		}
+	}
+
+	void HealthUpdate(int p_health) {
+		if (p_health == 0) {
+			Debug.Log("Normal enemy died!");
+			if (_deadPrefab != null) {
+				Instantiate(_deadPrefab, transform.position, Quaternion.identity);
+			}
+			Destroy(gameObject);
+		}
+	}
+}

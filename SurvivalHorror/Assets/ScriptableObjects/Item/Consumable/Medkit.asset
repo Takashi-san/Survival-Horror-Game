@@ -16,8 +16,8 @@ MonoBehaviour:
   _canUse: 1
   _canDiscard: 1
   _maxQuantity: 1
-  _spriteIcon: {fileID: 21300000, guid: b7ebd8973a9bad64da07325c9fc50082, type: 3}
-  _spriteGame: {fileID: 21300000, guid: 41d91289f53972542838383416a338c7, type: 3}
+  _spriteIcon: {fileID: 21300000, guid: f7815729f8b42ed49b83bcc98ad8c635, type: 3}
+  _spriteGame: {fileID: 21300000, guid: ddbe7d471b7210d488648773a877e7ca, type: 3}
   _name: Medkit
   _description: Good for your health :).
   _heal: 10

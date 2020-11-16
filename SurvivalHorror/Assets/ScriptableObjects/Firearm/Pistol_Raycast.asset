@@ -22,6 +22,10 @@ MonoBehaviour:
   _reloadTime: 0.5
   _magazineSize: 12
   _ammoType: 1
+  _magazine: 0
   _damage: 10
   _nBullets: 1
   _bulletScatter: 0
+  _hitLayers:
+    serializedVersion: 2
+    m_Bits: 67584

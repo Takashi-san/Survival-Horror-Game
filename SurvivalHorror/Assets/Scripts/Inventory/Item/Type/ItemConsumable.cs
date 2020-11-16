@@ -8,7 +8,7 @@ public class ItemConsumable : ItemType {
 	[SerializeField] [Min(0)] int _heal = 0;
 
 	public override bool Use() {
-		Health playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Health>();
+		Health playerHealth = Player.instance.GetComponent<Health>();
 		if (!playerHealth.IsFull) {
 			playerHealth.HealDamage(_heal);
 			return true;

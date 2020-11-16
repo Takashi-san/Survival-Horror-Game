@@ -10,6 +10,7 @@ public class CameraBasePosition : MonoBehaviour {
 			_isAiming = value;
 		}
 	}
+	public bool inInventory = false;
 
 	[SerializeField] [Min(0)] float _maxOffset = 0;
 	[SerializeField] [Min(0)] float _mouseInfluenceLimitDistance = 0;
@@ -24,7 +25,7 @@ public class CameraBasePosition : MonoBehaviour {
 	}
 
 	void LateUpdate() {
-		Vector3 __target = Player.instance.position;
+		Vector3 __target = Player.instance.transform.position;
 		__target.z = 0;
 
 		_timer += Time.deltaTime;
@@ -36,6 +37,9 @@ public class CameraBasePosition : MonoBehaviour {
 		_offset *= _maxOffset;
 
 		__target.z = -10;
+		if (inInventory) {
+			_offset = Vector3.zero;
+		}
 		transform.position = __target + _offset;
 	}
 }

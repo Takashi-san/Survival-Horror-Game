@@ -305,6 +305,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionText: Door
+  _needKey: 0
+  _key: {fileID: 0}
   _joint: {fileID: 1157572660024375856}
 --- !u!58 &1157572661933496490
 CircleCollider2D:
@@ -319,6 +321,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.5, y: 0}
+  m_Offset: {x: -1.5, y: 7.1054206e-15}
   serializedVersion: 2
-  m_Radius: 1.2588298
+  m_Radius: 1.6223688

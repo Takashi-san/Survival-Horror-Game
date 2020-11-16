@@ -20,4 +20,4 @@ MonoBehaviour:
   _spriteGame: {fileID: 21300000, guid: 5e33843c0f67ba24f94fc425edf38d80, type: 3}
   _name: Pistol
   _description: It goes pew pew!
-  _weapon: {fileID: 11400000, guid: 7a19e9b85c6d57e42837001dc6f8dcf5, type: 2}
+  weapon: {fileID: 11400000, guid: 7a19e9b85c6d57e42837001dc6f8dcf5, type: 2}

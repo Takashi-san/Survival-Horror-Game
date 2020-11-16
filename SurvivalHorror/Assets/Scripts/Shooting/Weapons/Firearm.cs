@@ -25,7 +25,7 @@ public abstract class Firearm : ScriptableObject {
 	[SerializeField] [Min(0)] protected float _reloadTime = 0;
 	[SerializeField] [Min(1)] protected int _magazineSize = 0;
 	[SerializeField] protected Enums.Ammo _ammoType = Enums.Ammo.NONE;
-	int _magazine;
+	[SerializeField] int _magazine;
 	public int Magazine {
 		get => _magazine;
 		set {
@@ -44,6 +44,7 @@ public abstract class Firearm : ScriptableObject {
 	[SerializeField] [Min(0)] protected int _damage = 0;
 	[SerializeField] [Min(1)] protected int _nBullets = 1;
 	[SerializeField] [Range(0, 90)] protected float _bulletScatter = 0;
+	[SerializeField] protected LayerMask _hitLayers = new LayerMask();
 
 	public abstract void Fire(GameObject owner, Quaternion direction);
 	public virtual void Setup(GameObject owner) { }

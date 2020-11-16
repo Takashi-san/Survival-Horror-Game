@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour {
 		set => _isAiming = value;
 	}
 
+	public bool canWalk = true;
+
 	[SerializeField] [Min(0)] float _maxVelocity = 0;
 	[SerializeField] [Range(0, 1)] float _walkingModifier = 0;
 	[SerializeField] [Range(0, 1)] float _aimingModifier = 0;
@@ -41,6 +43,9 @@ public class PlayerMovement : MonoBehaviour {
 		__steering = Vector2.ClampMagnitude(__steering, _maxSteering);
 		__steering = __steering / _rb.mass;
 
+		if (!canWalk) {
+			__steering = Vector2.zero;
+		}
 		_rb.velocity += __steering;
 	}
 

@@ -10,18 +10,16 @@ public class RaycastFirearm : Firearm {
 		if (_nBullets > 1) {
 			for (int i = 0; i < _nBullets; i++) {
 				Quaternion scatteredDirection = direction * Quaternion.AngleAxis(Random.Range(-_bulletScatter, _bulletScatter), Vector3.forward);
-				target.Add(Physics2D.Raycast(owner.transform.position, scatteredDirection * Vector3.up));
+				target.Add(Physics2D.Raycast(owner.transform.position, scatteredDirection * Vector3.up, float.MaxValue, _hitLayers));
 			}
 		}
 		else {
-			target.Add(Physics2D.Raycast(owner.transform.position, direction * Vector3.up));
+			target.Add(Physics2D.Raycast(owner.transform.position, direction * Vector3.up, float.MaxValue, _hitLayers));
 		}
 
 		for (int i = 0; i < target.Count; i++) {
 			if (target[i].collider != null) {
 				Debug.DrawLine(owner.transform.position, target[i].point, Color.yellow, 1);
-				Debug.DrawRay(owner.transform.position, direction * Quaternion.AngleAxis(_bulletScatter, Vector3.forward) * Vector3.up * 5, Color.blue, 1);
-				Debug.DrawRay(owner.transform.position, direction * Quaternion.AngleAxis(-_bulletScatter, Vector3.forward) * Vector3.up * 5, Color.blue, 1);
 
 				Health targetLife = target[i].collider.GetComponent<Health>();
 				if (targetLife) {
@@ -29,5 +27,7 @@ public class RaycastFirearm : Firearm {
 				}
 			}
 		}
+		Debug.DrawRay(owner.transform.position, direction * Quaternion.AngleAxis(_bulletScatter, Vector3.forward) * Vector3.up * 5, Color.blue, 1);
+		Debug.DrawRay(owner.transform.position, direction * Quaternion.AngleAxis(-_bulletScatter, Vector3.forward) * Vector3.up * 5, Color.blue, 1);
 	}
 }

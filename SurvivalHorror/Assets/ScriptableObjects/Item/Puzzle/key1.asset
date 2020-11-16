@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e8e4c23366bb934ea4f622972c59f00, type: 3}
+  m_Name: key1
+  m_EditorClassIdentifier: 
+  _type: 3
+  _canUse: 0
+  _canDiscard: 0
+  _maxQuantity: 1
+  _spriteIcon: {fileID: 21300000, guid: c34725f010ce24f45b8f77d41e388723, type: 3}
+  _spriteGame: {fileID: 21300000, guid: fffde8dd6b96f1341aae689cd4dfffdf, type: 3}
+  _name: Common key
+  _description: Looks like a simple key for a door.
+  _puzzle: key1

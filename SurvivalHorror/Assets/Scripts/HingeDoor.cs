@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HingeDoor : InteractableObject {
+	[SerializeField] bool _needKey = false;
+	[SerializeField] ItemType _key = null;
 	[SerializeField] HingeJoint2D _joint = null;
 	JointAngleLimits2D _openLimit;
 	JointAngleLimits2D _closedLimit;
@@ -15,13 +17,17 @@ public class HingeDoor : InteractableObject {
 	}
 
 	public override void Interact() {
+		if (_needKey) {
+			if (!InventorySystem.instance.HasItem(_key)) {
+				return;
+			}
+		}
 		if (_isOpen) {
 			CloseDoor();
 		}
 		else {
 			OpenDoor();
 		}
-		//base.Interact();
 	}
 
 	void OpenDoor() {

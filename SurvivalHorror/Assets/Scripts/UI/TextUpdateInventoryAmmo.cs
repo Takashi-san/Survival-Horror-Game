@@ -19,7 +19,7 @@ public class TextUpdateInventoryAmmo : MonoBehaviour {
 	}
 
 	void Start() {
-		InventorySystem.instance.addedItem += UpdateText;
+		//InventorySystem.instance.addedItem += UpdateText;
 	}
 
 	void UpdateText() {
