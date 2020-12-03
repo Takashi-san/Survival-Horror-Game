@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 	CameraBasePosition _camera;
 	UIInventoryMenu _inventoryMenu;
 	LookAtMouse _lookAtMouse;
+	ScreenShake _screenShake;
 
 	void Awake() {
 		if (instance == null) {
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour {
 		_controls.Player.Enable();
 
 		_controls.UI.Inventory.performed += Inventory;
+		_controls.UI.Pause.performed += ScreenShake;
 		_controls.UI.Enable();
 
 		_movement = GetComponent<PlayerMovement>();
@@ -45,6 +47,7 @@ public class Player : MonoBehaviour {
 		_inventoryMenu.Deactivate();
 		_lookAtMouse = GetComponentInChildren<LookAtMouse>();
 		GetComponent<Health>().healthUpdate += HealthUpdate;
+		_screenShake = FindObjectOfType<ScreenShake>();
 	}
 
 	void Update() {
@@ -122,5 +125,9 @@ public class Player : MonoBehaviour {
 	public void EquipWeapon(Firearm p_weapon) {
 		Debug.Log("Equiped weapon: " + p_weapon);
 		_shooter.ChangeWeapon(p_weapon);
+	}
+
+	void ScreenShake(InputAction.CallbackContext p_context) {
+		_screenShake.AddTrauma(0.2f);
 	}
 }
