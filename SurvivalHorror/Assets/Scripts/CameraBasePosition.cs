@@ -25,6 +25,7 @@ public class CameraBasePosition : MonoBehaviour {
 	}
 
 	void LateUpdate() {
+		if (Player.instance == null) return;
 		Vector3 __target = Player.instance.transform.position;
 		__target.z = 0;
 

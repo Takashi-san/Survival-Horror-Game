@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour {
 	public static Player instance;
 
+	[SerializeField] GameObject _deadPrefab = null;
+
 	PlayerControls _controls;
 	PlayerShooter _shooter;
 	PlayerMovement _movement;
@@ -119,6 +121,10 @@ public class Player : MonoBehaviour {
 	void HealthUpdate(int p_health) {
 		if (p_health == 0) {
 			print("Player died");
+			if (_deadPrefab != null) {
+				Instantiate(_deadPrefab, transform.position, Quaternion.identity);
+			}
+			Destroy(gameObject);
 		}
 	}
 

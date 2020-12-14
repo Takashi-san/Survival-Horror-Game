@@ -14,6 +14,12 @@ public class NormalEnemy : MonoBehaviour {
 	[SerializeField] LayerMask _raycastMask = new LayerMask();
 	[SerializeField] Transform _lookAtDirection = null;
 	[SerializeField] GameObject _deadPrefab = null;
+	[SerializeField] EnemyArea _attackArea = null;
+
+	[Header("Attack")]
+	[SerializeField] GameObject _attackPrefab = null;
+	[SerializeField] Transform _attackSpawnPoint = null;
+	[SerializeField] [Min(0)] float _attackDelay = 0f;
 
 	[Header("Seek Player")]
 	[SerializeField] [Min(0)] float _loseSightTime = 0;
@@ -37,6 +43,10 @@ public class NormalEnemy : MonoBehaviour {
 
 	bool _seekingPlayer = true;
 	float _loseSightTimer = 0;
+	bool _inAttack = false;
+
+	bool _playerInAttackArea = false;
+	float _attackTimer = 0;
 
 	bool _patrolA = true;
 
@@ -47,6 +57,7 @@ public class NormalEnemy : MonoBehaviour {
 		_steeringManager = GetComponent<SteeringManagerRB2D>();
 		_rb2d = GetComponent<Rigidbody2D>();
 		GetComponent<Health>().healthUpdate += HealthUpdate;
+		_attackArea.playerInArea += PlayerInAttackArea;
 		GetComponentInChildren<EnemyFieldOfView>().sawPlayer += SawPlayer;
 		if (!_debugMode) _stateText.text = "";
 
@@ -126,6 +137,8 @@ public class NormalEnemy : MonoBehaviour {
 		_pathRefreshTimer += Time.fixedDeltaTime;
 		_steeringManager.SetMaxVelocity(_seekVelocity);
 
+		if (Player.instance == null) return;
+
 		if (_path == null && !_pathRequested || _pathRefreshTimer > _pathTimeToRefresh) {
 			PathRequestManager.instance.RequestPath(transform.position, Player.instance.transform.position, OnPathFound);
 			_pathRefreshTimer = 0;
@@ -168,7 +181,10 @@ public class NormalEnemy : MonoBehaviour {
 		if (_debugMode) _stateText.text = "seek player";
 		_steeringManager.SetMaxVelocity(_seekVelocity);
 
-		Vector3 __direction = (Player.instance.transform.position - transform.position).normalized;
+		Vector3 __direction = Vector3.zero;
+		if (Player.instance != null) {
+			__direction = (Player.instance.transform.position - transform.position).normalized;
+		}
 		_steeringManager.SeekDirection(__direction);
 
 		_lookAtDirection.LookAt(transform.position + Vector3.forward, __direction);
@@ -185,6 +201,26 @@ public class NormalEnemy : MonoBehaviour {
 		_brain.PushState(StatePathPlayer);
 	}
 
+	void StateAttackPlayer() {
+		if (_debugMode) _stateText.text = "attack player";
+		_inAttack = true;
+
+		_steeringManager.SeekDirection(Vector2.zero);
+		Vector3 __direction = (Player.instance.transform.position - transform.position).normalized;
+		_lookAtDirection.LookAt(transform.position + Vector3.forward, __direction);
+
+		_attackTimer += Time.fixedDeltaTime;
+		if (_attackTimer > _attackDelay) {
+			//attack
+			Debug.Log("Enemy attacked!");
+			Instantiate(_attackPrefab, _attackSpawnPoint);
+
+			_inAttack = false;
+			_attackTimer = 0;
+			_brain.PopState();
+		}
+	}
+
 	#endregion
 
 	public void SawPlayer(Vector3 p_position) {
@@ -192,8 +228,10 @@ public class NormalEnemy : MonoBehaviour {
 
 		_seekingPlayer = true;
 		_loseSightTimer = 0;
-		_brain.PopState();
-		_brain.PushState(StateSeekPlayer);
+		if (!_inAttack) {
+			_brain.PopState();
+			_brain.PushState(StateSeekPlayer);
+		}
 	}
 
 	public void OnPathFound(Vector3[] p_path, bool p_success) {
@@ -207,7 +245,7 @@ public class NormalEnemy : MonoBehaviour {
 		_pathRequested = false;
 	}
 
-	public void OnDrawGizmos() {
+	void OnDrawGizmosSelected() {
 		if (_path != null && _debugMode) {
 			for (int i = _pathTargetIndex; i < _path.Length; i++) {
 				Gizmos.color = Color.blue;
@@ -220,6 +258,15 @@ public class NormalEnemy : MonoBehaviour {
 					Gizmos.DrawLine(_path[i - 1], _path[i]);
 				}
 			}
+		}
+	}
+
+	void PlayerInAttackArea(bool p_isInArea) {
+		Debug.Log("attack comand");
+		_inAttack = true;
+		_playerInAttackArea = p_isInArea;
+		if (p_isInArea) {
+			_brain.PushState(StateAttackPlayer);
 		}
 	}
 
