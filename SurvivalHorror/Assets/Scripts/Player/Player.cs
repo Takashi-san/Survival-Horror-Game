@@ -12,6 +12,7 @@ public class Player : MonoBehaviour {
 	PlayerShooter _shooter;
 	PlayerMovement _movement;
 	PlayerInteraction _interaction;
+	PlayerAnimatorController _animator;
 	Vector2 _moveInput;
 	CameraBasePosition _camera;
 	UIInventoryMenu _inventoryMenu;
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour {
 		_movement = GetComponent<PlayerMovement>();
 		_shooter = GetComponentInChildren<PlayerShooter>();
 		_interaction = GetComponent<PlayerInteraction>();
+		_animator = GetComponent<PlayerAnimatorController>();
 		_camera = FindObjectOfType<CameraBasePosition>();
 		_inventoryMenu = FindObjectOfType<UIInventoryMenu>();
 		_inventoryMenu.Deactivate();
@@ -61,6 +63,7 @@ public class Player : MonoBehaviour {
 			_movement.IsAiming = true;
 			_shooter.IsAiming = true;
 			_camera.IsAiming = true;
+			_animator.SetAiming(true);
 		}
 	}
 
@@ -68,6 +71,7 @@ public class Player : MonoBehaviour {
 		_movement.IsAiming = false;
 		_shooter.IsAiming = false;
 		_camera.IsAiming = false;
+		_animator.SetAiming(false);
 	}
 
 	void Shooting(InputAction.CallbackContext p_context) {
@@ -130,6 +134,7 @@ public class Player : MonoBehaviour {
 
 	public void EquipWeapon(Firearm p_weapon) {
 		Debug.Log("Equiped weapon: " + p_weapon);
+		_animator.SetShotgun(true);
 		_shooter.ChangeWeapon(p_weapon);
 	}
 

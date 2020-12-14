@@ -24,4 +24,12 @@ public class PlayerAnimatorController : MonoBehaviour {
 			_legs.SetBool("Moving", true);
 		}
 	}
+
+	public void SetShotgun(bool p_shotgun) {
+		_torso.SetBool("Shotgun", p_shotgun);
+	}
+
+	public void SetAiming(bool p_aiming) {
+		_torso.SetBool("Aiming", p_aiming);
+	}
 }
