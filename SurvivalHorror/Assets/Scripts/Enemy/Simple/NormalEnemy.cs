@@ -15,6 +15,7 @@ public class NormalEnemy : MonoBehaviour {
 	[SerializeField] Transform _lookAtDirection = null;
 	[SerializeField] GameObject _deadPrefab = null;
 	[SerializeField] EnemyArea _attackArea = null;
+	[SerializeField] EnemyAnimatorController _animator = null;
 
 	[Header("Attack")]
 	[SerializeField] GameObject _attackPrefab = null;
@@ -213,7 +214,7 @@ public class NormalEnemy : MonoBehaviour {
 		if (_attackTimer > _attackDelay) {
 			//attack
 			Debug.Log("Enemy attacked!");
-			Instantiate(_attackPrefab, _attackSpawnPoint);
+			_animator.SetAttack();
 
 			_inAttack = false;
 			_attackTimer = 0;
@@ -270,11 +271,16 @@ public class NormalEnemy : MonoBehaviour {
 		}
 	}
 
+	public void DoAttack() {
+		Instantiate(_attackPrefab, _attackSpawnPoint);
+	}
+
 	void HealthUpdate(int p_health) {
+		_animator.SetHurt();
 		if (p_health == 0) {
 			Debug.Log("Normal enemy died!");
 			if (_deadPrefab != null) {
-				Instantiate(_deadPrefab, transform.position, Quaternion.identity);
+				Instantiate(_deadPrefab, transform.position, _lookAtDirection.rotation);
 			}
 			Destroy(gameObject);
 		}
