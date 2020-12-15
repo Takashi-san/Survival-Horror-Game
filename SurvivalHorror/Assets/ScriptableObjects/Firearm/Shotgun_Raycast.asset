@@ -22,10 +22,12 @@ MonoBehaviour:
   _reloadTime: 1
   _magazineSize: 6
   _ammoType: 2
-  _magazine: 3
+  _magazine: 5
   _damage: 1
   _nBullets: 8
   _bulletScatter: 10
   _hitLayers:
     serializedVersion: 2
     m_Bits: 67584
+  _fireSound: {fileID: 8300000, guid: 84759ad4eab90a84cb45284653e455e0, type: 3}
+  _reloadSound: {fileID: 8300000, guid: 1a5e3fc189110474ca716058e1a2b490, type: 3}

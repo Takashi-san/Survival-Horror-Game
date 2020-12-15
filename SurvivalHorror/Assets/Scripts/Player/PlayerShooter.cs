@@ -23,6 +23,7 @@ public class PlayerShooter : MonoBehaviour {
 	public Action<Firearm> changedWeapon;
 
 	[SerializeField] Firearm _weapon = null;
+	[SerializeField] AudioSource _audioSource = null;
 	float _timer = 0;
 	float _deviation = 0;
 	Coroutine _reloadCorroutine = null;
@@ -118,6 +119,8 @@ public class PlayerShooter : MonoBehaviour {
 		float deviation = UnityEngine.Random.Range(-_deviation, _deviation);
 		Quaternion direction = Quaternion.Euler(transform.rotation.eulerAngles + (Vector3.forward * deviation));
 		_weapon.Fire(gameObject, direction);
+		_audioSource.clip = _weapon.FireSound;
+		_audioSource.Play();
 
 		// Deviation, ammo and timer update.
 		_timer = 0;
@@ -144,6 +147,9 @@ public class PlayerShooter : MonoBehaviour {
 			_reloadCorroutine = null;
 			yield break;
 		}
+
+		_audioSource.clip = _weapon.ReloadSound;
+		_audioSource.Play();
 		yield return new WaitForSeconds(_weapon.ReloadTime);
 		_weapon.Magazine = _weapon.MagazineSize - __notReloaded;
 

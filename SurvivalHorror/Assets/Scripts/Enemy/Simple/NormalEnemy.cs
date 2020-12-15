@@ -5,6 +5,7 @@ using TMPro;
 using Pathfind2D;
 
 public class NormalEnemy : MonoBehaviour {
+
 	[Header("Debug")]
 	[SerializeField] bool _debugMode = false;
 	[SerializeField] TextMeshProUGUI _stateText = null;
@@ -16,11 +17,17 @@ public class NormalEnemy : MonoBehaviour {
 	[SerializeField] GameObject _deadPrefab = null;
 	[SerializeField] EnemyArea _attackArea = null;
 	[SerializeField] EnemyAnimatorController _animator = null;
+	[SerializeField] AudioSource _constantAudioSource = null;
+	[SerializeField] AudioSource _sfxAudioSource = null;
+	[SerializeField] AudioClip _normalSound = null;
+	[SerializeField] AudioClip _chaseSound = null;
+	[SerializeField] AudioClip _seePlayerSound = null;
 
 	[Header("Attack")]
 	[SerializeField] GameObject _attackPrefab = null;
 	[SerializeField] Transform _attackSpawnPoint = null;
 	[SerializeField] [Min(0)] float _attackDelay = 0f;
+	[SerializeField] [Min(0)] float _attackCooldown = 0f;
 
 	[Header("Seek Player")]
 	[SerializeField] [Min(0)] float _loseSightTime = 0;
@@ -48,6 +55,7 @@ public class NormalEnemy : MonoBehaviour {
 
 	bool _playerInAttackArea = false;
 	float _attackTimer = 0;
+	float _attackCooldownTimer = 0;
 
 	bool _patrolA = true;
 
@@ -67,6 +75,9 @@ public class NormalEnemy : MonoBehaviour {
 			return;
 		}
 		_brain.PushState(StateIdle);
+
+		_constantAudioSource.clip = _normalSound;
+		_constantAudioSource.Play();
 	}
 
 	void FixedUpdate() {
@@ -74,6 +85,9 @@ public class NormalEnemy : MonoBehaviour {
 			_loseSightTimer += Time.fixedDeltaTime;
 			if (_loseSightTimer > _loseSightTime) {
 				_seekingPlayer = false;
+
+				_constantAudioSource.clip = _normalSound;
+				_constantAudioSource.Play();
 
 				_brain.PopState();
 				_path = null;
@@ -85,6 +99,14 @@ public class NormalEnemy : MonoBehaviour {
 				else {
 					_brain.PushState(StateIdle);
 				}
+			}
+		}
+
+		if (_playerInAttackArea) {
+			_attackCooldownTimer += Time.fixedDeltaTime;
+			if (_attackCooldownTimer >= _attackCooldown) {
+				_attackCooldownTimer = 0;
+				PlayerInAttackArea(true);
 			}
 		}
 
@@ -227,6 +249,14 @@ public class NormalEnemy : MonoBehaviour {
 	public void SawPlayer(Vector3 p_position) {
 		_playerLastSawPosition = p_position;
 
+		if (!_seekingPlayer) {
+			_sfxAudioSource.clip = _seePlayerSound;
+			_sfxAudioSource.Play();
+
+			_constantAudioSource.clip = _chaseSound;
+			_constantAudioSource.Play();
+		}
+
 		_seekingPlayer = true;
 		_loseSightTimer = 0;
 		if (!_inAttack) {
@@ -266,8 +296,12 @@ public class NormalEnemy : MonoBehaviour {
 		Debug.Log("attack comand");
 		_inAttack = true;
 		_playerInAttackArea = p_isInArea;
+
 		if (p_isInArea) {
 			_brain.PushState(StateAttackPlayer);
+		}
+		else {
+			_attackCooldownTimer = 0;
 		}
 	}
 
@@ -279,10 +313,14 @@ public class NormalEnemy : MonoBehaviour {
 		_animator.SetHurt();
 		if (p_health == 0) {
 			Debug.Log("Normal enemy died!");
+			GetComponent<Health>().healthUpdate -= HealthUpdate;
 			if (_deadPrefab != null) {
 				Instantiate(_deadPrefab, transform.position, _lookAtDirection.rotation);
 			}
 			Destroy(gameObject);
+		}
+		else {
+			SawPlayer(transform.position);
 		}
 	}
 }

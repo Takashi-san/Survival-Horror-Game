@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Random = UnityEngine.Random;
 
 public class Health : MonoBehaviour {
 	public int CurrentHealth => _health;
@@ -9,6 +10,8 @@ public class Health : MonoBehaviour {
 	public Action<int> healthUpdate;
 
 	[SerializeField] HealthInfo _healthInfo = null;
+	[SerializeField] AudioClip[] _hurtSound = null;
+	[SerializeField] AudioSource _audioSource = null;
 	int _health = 0;
 	int _maxHealth = 0;
 
@@ -27,6 +30,11 @@ public class Health : MonoBehaviour {
 
 	public void DealDamage(int damage) {
 		if (damage > 0) {
+			if (_audioSource != null) {
+				_audioSource.clip = _hurtSound[Random.Range(0, _hurtSound.Length)];
+				_audioSource.Play();
+			}
+
 			_health -= damage;
 			_health = _health < 0 ? 0 : _health;
 			if (healthUpdate != null) {

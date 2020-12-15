@@ -48,4 +48,10 @@ public abstract class Firearm : ScriptableObject {
 
 	public abstract void Fire(GameObject owner, Quaternion direction);
 	public virtual void Setup(GameObject owner) { }
+
+	[Header("Audio")]
+	[SerializeField] AudioClip _fireSound = null;
+	[SerializeField] AudioClip _reloadSound = null;
+	public AudioClip FireSound => _fireSound;
+	public AudioClip ReloadSound => _reloadSound;
 }
