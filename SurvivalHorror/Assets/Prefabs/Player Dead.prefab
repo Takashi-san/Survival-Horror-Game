@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 198948916853787365}
   - component: {fileID: 198948916853787364}
+  - component: {fileID: 5413528531126829844}
   m_Layer: 0
   m_Name: Player Dead
   m_TagString: Untagged
@@ -81,3 +82,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!81 &5413528531126829844
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198948916853787371}
+  m_Enabled: 1

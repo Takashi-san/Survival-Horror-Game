@@ -58,6 +58,7 @@ public class NormalEnemy : MonoBehaviour {
 	float _attackCooldownTimer = 0;
 
 	bool _patrolA = true;
+	bool _ignoreOnce = false;
 
 	Vector3 _playerLastSawPosition;
 
@@ -320,7 +321,10 @@ public class NormalEnemy : MonoBehaviour {
 			Destroy(gameObject);
 		}
 		else {
-			SawPlayer(transform.position);
+			if (_ignoreOnce) {
+				SawPlayer(transform.position);
+			}
+			_ignoreOnce = true;
 		}
 	}
 }

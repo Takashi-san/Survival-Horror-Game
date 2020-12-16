@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3043054293671378743}
   - component: {fileID: 3043054293671378742}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Normal Enemy Dead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5729419198698883503}
   - component: {fileID: 7284437612400447048}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: New Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

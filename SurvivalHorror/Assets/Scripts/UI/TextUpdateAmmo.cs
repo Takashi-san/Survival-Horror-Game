@@ -2,7 +2,7 @@
 using TMPro;
 
 public class TextUpdateAmmo : MonoBehaviour {
-	[SerializeField] Shooter _shooter = null;
+	[SerializeField] PlayerShooter _shooter = null;
 	TextMeshProUGUI _text = null;
 
 	void Awake() {
