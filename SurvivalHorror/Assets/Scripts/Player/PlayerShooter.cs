@@ -134,8 +134,10 @@ public class PlayerShooter : MonoBehaviour {
 
 	public void Reload() {
 		if (_reloadCorroutine == null) {
-			if (!_weapon.IsFull) {
-				_reloadCorroutine = StartCoroutine(Reloading());
+			if (_weapon != null) {
+				if (!_weapon.IsFull) {
+					_reloadCorroutine = StartCoroutine(Reloading());
+				}
 			}
 		}
 	}
